@@ -1,0 +1,84 @@
+﻿@page
+@model Project.Pages.Professor.ReportModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Report";
+}
+<div class="container professor-report">
+    <h2 class="mb-4">Room Issue Report</h2>
+
+    @if (TempData["ReportSuccess"] != null)
+    {
+        <div class="alert alert-success">@TempData["ReportSuccess"]</div>
+    }
+
+    <form asp-action="Report" method="post">
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="RoomCode" class="form-label"></label>
+                    <input asp-for="RoomCode" class="form-control"
+                           placeholder="Enter room code (e.g. G-203)">
+                    <span asp-validation-for="RoomCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Category" class="form-label"></label>
+                    <select asp-for="Category" class="form-select">
+                        @foreach (ReportCategory category in Enum.GetValues(typeof(ReportCategory)))
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="Urgency" class="form-label"></label>
+                    <select asp-for="Urgency" class="form-select">
+                        @foreach (UrgencyLevel level in Enum.GetValues(typeof(UrgencyLevel)))
+                        {
+                            <option value="@level">@level</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control"
+                              rows="5"
+                              placeholder="Describe the issue in detail..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-lg btn-warning">
+                <i class="bi bi-exclamation-triangle"></i> Submit Report
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Styles {
+    <style>
+        .professor-report .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .professor-report select.form-select {
+            background-color: #f8f9fa;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            min-width: 200px;
+        }
+    </style>
+}

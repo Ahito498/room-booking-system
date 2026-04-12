@@ -1,0 +1,18 @@
+# .NET build output
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.dtbcache.v2
+*.vsidx
+*.vspscc
+*.vsscc
+*.pidb
+*.swp
+*~
+.DS_Store
+__MACOSX/
+
+# Sensitive config (connection strings)
+appsettings.Development.json

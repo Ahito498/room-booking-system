@@ -1,0 +1,54 @@
+﻿@page
+@model Project.Pages.RoomServicesTeam.QuotaModel
+@{
+    ViewData["Title"] = "Quota Requests";
+}
+@{
+    Layout = "_Layout";
+}
+<h2>Quota Requests</h2>
+
+@if (Model.QuotaRequestsTable.Rows.Count == 0)
+{
+    <p>No quota requests found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>User ID</th>
+            <th>User Type</th>
+            <th>Number of Extra Hours</th>
+            <th>Reason</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (System.Data.DataRow row in Model.QuotaRequestsTable.Rows)
+        {
+            <tr>
+                <td>@row["ID"]</td>
+                <td>@row["UserID"]</td>
+                <td>@row["UserType"]</td>
+                <td>@row["ExtraHours"]</td>
+                <td>@row["Reason"]</td>
+                <td>
+                    <form method="post" asp-page-handler="UpdateStatus">
+                        <input type="hidden" name="SelectedRequestId" value="@row["ID"]" />
+                        
+                        <label for="SelectedStatus" class="me-2">Status</label>
+                        <select asp-for="SelectedStatus" class="form-select w-25" required>
+                            <option value="Approved">Approve</option>
+                            <option value="Declined">Reject</option>
+                        </select>
+
+                        <button type="submit" class="btn btn-primary ms-3">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

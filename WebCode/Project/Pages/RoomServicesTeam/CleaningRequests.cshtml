@@ -1,0 +1,58 @@
+﻿@page
+@model Project.Pages.RoomServicesTeam.Cleaning_RequestModel
+@{
+    ViewData["Title"] = "Submit Cleaning Request";
+}
+
+<h2>Submit a Cleaning Request</h2>
+
+<!-- Form to submit a new cleaning request -->
+<form method="post" asp-page-handler="SubmitCleaningRequest">
+    <div class="d-flex align-items-center mb-4">
+        <label class="me-2">Select Room:</label>
+        <select asp-for="SelectedRoomId" class="form-select w-25" required>
+            <option value="">-- Select Room --</option>
+            @foreach (var room in Model.RoomsList)
+            {
+                <option value="@room">@room</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-primary ms-3">Request</button>
+    </div>
+</form>
+
+<!-- Table of all cleaning requests -->
+<h3>Cleaning Requests</h3>
+
+@if (Model.CleaningRequestsTable.Rows.Count == 0)
+{
+    <p>No cleaning requests found.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="table-light">
+        <tr>
+            <th>Request ID</th>
+            <th>Room ID</th>
+            <th>Condition</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Requested By</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (System.Data.DataRow row in Model.CleaningRequestsTable.Rows)
+        {
+            <tr>
+                <td>@row["RID"]</td>
+                <td>@row["RoomID"]</td>
+                <td>@row["Condition"]</td>
+                <td>@Convert.ToDateTime(row["RequestDate"]).ToShortDateString()</td>
+                <td>@row["RequestTime"]</td>
+                <td>@row["RequestorName"]</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

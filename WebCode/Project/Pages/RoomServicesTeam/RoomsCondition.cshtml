@@ -1,0 +1,41 @@
+﻿@page
+@model Project.Pages.RoomServicesTeam.RoomConditionModel
+@{
+    ViewData["Title"] = "Room Condition Management";
+}
+
+<h2>Room Condition Management</h2>
+
+<form method="post" asp-page-handler="ToggleCondition">
+    <div class="d-flex align-items-center mb-3">
+        <label class="me-2">Select Room</label>
+        <select asp-for="SelectedRoomId" class="form-select w-25" required>
+            <option value="">-- Select a Room --</option>
+            @foreach (var roomId in Model.RoomList)
+            {
+                <option value="@roomId">@roomId</option>
+            }
+        </select>
+
+        <button type="submit" class="btn btn-warning ms-3">Toggle Condition</button>
+    </div>
+</form>
+
+<h4 class="mt-4">Current Room Conditions</h4>
+<table class="table table-bordered">
+    <thead class="table-info">
+    <tr>
+        <th>Room ID</th>
+        <th>Condition</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (System.Data.DataRow row in Model.RoomConditionTable.Rows)
+    {
+        <tr>
+            <td>@row["RoomID"]</td>
+            <td>@row["AvailabilityStatus"]</td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+﻿@page
+@model Project.Pages.Student.Room_BookingModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Room Booking";
+}
+<div class="container">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2>Room Booking</h2>
+        </div>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <form asp-action="RoomBooking" method="post">
+                <div class="mb-3">
+                    <label asp-for="RoomCode" class="form-label">Room Code</label>
+                    <input asp-for="RoomCode" class="form-control" required>
+                    <span asp-validation-for="RoomCode" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Reason" class="form-label">Reason</label>
+                    <textarea asp-for="Reason" class="form-control" rows="3" required></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TimeSlot" class="form-label">Time Slot</label>
+                    <input asp-for="TimeSlot" class="form-control"
+                           placeholder="DD/MM/YYYY HH:MM - HH:MM" required>
+                    <span asp-validation-for="TimeSlot" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" asp-for="IsClinic" class="form-check-input">
+                    <label asp-for="IsClinic" class="form-check-label">For a Clinic?</label>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SelectedCourse" class="form-label">Course</label>
+                    <select asp-for="SelectedCourse" class="form-select" required>
+                        <option value="">Select Course</option>
+                        <option value="CIE205">CIE 205</option>
+                        <option value="CIE206">CIE 206</option>
+                    </select>
+                    <span asp-validation-for="SelectedCourse" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Request Booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .navbar {
+        padding: 1rem 0;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .nav-link {
+        margin-left: 1.5rem;
+        color: #6c757d;
+    }
+
+        .nav-link.active {
+            color: #0d6efd;
+            font-weight: 500;
+        }
+
+    .form-check-label {
+        margin-left: 0.5rem;
+    }
+</style>

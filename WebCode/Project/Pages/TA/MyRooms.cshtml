@@ -1,0 +1,50 @@
+﻿@page
+@model Project.Pages.TA.MyRoomsModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Rooms";
+}
+
+<div class="container">
+    <h2>My Tutorial Rooms</h2>
+
+    <!-- Tutorial Rooms -->
+    <div class="row">
+        @foreach (var room in Model.TutorialRooms)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        @room.CourseCode - @room.Status
+                    </div>
+                    <div class="card-body">
+                        <p>Room: @room.RoomNumber</p>
+                        <p>Time: @room.TimeSlot</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Pending Requests -->
+    <h3>Pending Requests</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model.PendingRequests)
+            {
+                <tr>
+                    <td>@request.CourseCode</td>
+                    <td>@request.Reason</td>
+                    <td>@request.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

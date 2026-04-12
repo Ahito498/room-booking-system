@@ -1,0 +1,42 @@
+﻿@page
+@model Project.Pages.RoomServicesTeam.DailyCleaningRequestsModel
+@{
+    ViewData["Title"] = "Daily Cleaning Overview";
+}
+
+<h2>Daily Cleaning Overview</h2>
+
+<form method="post" class="mb-4">
+    <div class="d-flex align-items-center">
+        <label class="me-2">Select Date:</label>
+        <input type="date" asp-for="SelectedDate" class="form-control w-25" required />
+        <button type="submit" class="btn btn-primary ms-3">Filter</button>
+    </div>
+</form>
+
+@if (Model.DailyCleaningTable.Rows.Count == 0)
+{
+    <p>No cleaning records found for the selected date.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="table-success">
+        <tr>
+            <th>Room ID</th>
+            <th>Condition</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (System.Data.DataRow row in Model.DailyCleaningTable.Rows)
+        {
+            <tr>
+                <td>@row["RoomID"]</td>
+                <td>@row["Condition"]</td>
+                <td>@Convert.ToDateTime(row["RequestDate"]).ToShortDateString()</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

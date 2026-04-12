@@ -1,0 +1,62 @@
+﻿@page
+@model Project.Pages.CleaningStaff.Cleaning_RequestsModel
+@{
+    ViewData["Title"] = "Cleaning Requests";
+}
+
+<h2>Cleaning Requests</h2>
+
+@if (Model.CleaningRequestsTable.Rows.Count == 0)
+{
+    <p>No pending or in-progress cleaning requests found.</p>
+}
+else
+{
+    <form method="post" asp-page-handler="UpdateRequestStatus">
+        <div class="d-flex align-items-center mb-3">
+            <label class="ms-3 me-2">Select Request</label>
+            <select asp-for="SelectedRequestId" class="form-select w-25" required>
+                <option value="">Select a Request</option>
+                @foreach (System.Data.DataRow row in Model.CleaningRequestsTable.Rows)
+                {
+                    <option value="@row["ID"]">@row["RoomID"] - @row["RequestorName"]</option>
+                }
+            </select>
+
+            <label class="ms-3 me-2">Condition</label>
+            <select asp-for="SelectedStatus" class="form-select w-25" required>
+                <option value="In progress">In Progress</option>
+                <option value="Handled">Handled</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary ms-3">Update</button>
+        </div>
+    </form>
+
+    <h3 class="mt-4">Requests Table</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Room ID</th>
+                <th>Requestor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (System.Data.DataRow row in Model.CleaningRequestsTable.Rows)
+        {
+            <tr>
+                <td>@row["ID"]</td>
+                <td>@row["RoomID"]</td>
+                <td>@row["RequestorName"]</td>
+                <td>@Convert.ToDateTime(row["RequestDate"]).ToShortDateString()</td>
+                <td>@row["RequestTime"]</td>
+                <td>@row["Condition"]</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

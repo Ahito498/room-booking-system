@@ -1,0 +1,85 @@
+﻿@page
+@model Project.Pages.Student.My_RoomsModel
+@{    Layout = "_Layout";
+    ViewData["Title"] = "My Rooms";
+}
+<div class="container mt-4">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2>My Rooms</h2>
+        </div>
+    </div>
+
+    <!-- JTA Courses Section -->
+    <div class="row">
+        <div class="col-12">
+            @foreach (var course in Model.JTACourses)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>JTA Courses @course.CourseCode</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Course Name:</dt>
+                            <dd class="col-sm-9">@course.CourseName</dd>
+
+                            <dt class="col-sm-3">Room:</dt>
+                            <dd class="col-sm-9">@course.RoomNumber</dd>
+
+                            <dt class="col-sm-3">Room Location:</dt>
+                            <dd class="col-sm-9">@course.RoomLocation</dd>
+
+                            <dt class="col-sm-3">Time Slot:</dt>
+                            <dd class="col-sm-9">@course.TimeSlot</dd>
+                        </dl>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Enrolled Courses Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4>Enrolled Courses</h4>
+            @foreach (var course in Model.EnrolledCourses)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>@course.CourseCode</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Course Name:</dt>
+                            <dd class="col-sm-9">@course.CourseName</dd>
+
+                            <dt class="col-sm-3">Room:</dt>
+                            <dd class="col-sm-9">@course.RoomNumber</dd>
+
+                            <dt class="col-sm-3">Room Location:</dt>
+                            <dd class="col-sm-9">@course.RoomLocation</dd>
+
+                            <dt class="col-sm-3">Time Slot:</dt>
+                            <dd class="col-sm-9">@course.TimeSlot</dd>
+                        </dl>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-header {
+        background-color: #f8f9fa;
+    }
+    dt {
+        font-weight: 500;
+    }
+    .nav-pills .nav-link.active {
+        background-color: #007bff;
+        color: white;
+    }
+</style>

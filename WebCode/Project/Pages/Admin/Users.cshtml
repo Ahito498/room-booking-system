@@ -1,0 +1,96 @@
+﻿@page
+@model UsersModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label asp-for="UserType" class="form-label">Type</label>
+                    <select asp-for="UserType" class="form-select">
+                        <option value=''>All</option>
+                        <option value='Student'>Student</option>
+                        <option value='TA'>TA</option>
+                        <option value='Professor'>Professor</option>
+                        <option value='Registrar'>Registrar</option>
+                        <option value='CleaningStaff'>Cleaning Staff</option>
+                        <option value='RoomServicesMember'>Room Servicing</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="e.g., John Doe">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100 py-2" style="background-color:#2c3e50;">Search Users</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.Searched && Model.DT.Rows.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.DT.Rows.Count; i++)
+                    {
+                        <tr>
+                        @for (int j = 0; j < Model.DT.Columns.Count; j++)
+                        {
+                         <td>@Model.DT.Rows[i][j]</td>   
+                        }
+                            <td>
+                                <form method="post" asp-page-handler="SetType" class="d-flex">
+                                <input type="hidden" name="UserID" value="@Model.DT.Rows[i]["UserID"]" />
+                                <select name="NewType" class="form-select form-select-sm me-2" style="width: 120px; background-color: #f8f9fa; border-color: #ced4da;">
+                                        <option selected disabled>Set Type</option>
+                                        <option value='Student'>Student</option>
+                                        <option value='TA'>TA</option>
+                                        <option value='Professor'>Professor</option>
+                                        <option value='Registrar'>Registrar</option>
+                                        <option value='CleaningStaff'>Cleaning Staff</option>
+                                        <option value='RoomServicesMember'>Room Servicing</option>
+                                    </select>                                
+                                    <button class="btn btn-sm btn-outline-secondary ms-1">Edit</button>
+                                </form>
+
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else if (@Model.Searched)
+    {
+        <div class="alert alert-info">No users found matching your criteria.</div>
+    }
+
+
+
+</div>
+
+<style>
+    .table th {
+        white-space: nowrap;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+</style>

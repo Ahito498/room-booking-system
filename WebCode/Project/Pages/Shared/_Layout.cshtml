@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    @RenderSection("Styles", required: false)
+
+</head>
+<body>
+    @if (!IsSectionDefined("HideNavBar"))
+    {
+    <header>
+        <div class="logo-container">
+            <a href="/">
+                <img src="~/images/uni_logo.png" alt="Logo" class="logo" />
+            </a>
+        </div>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+                <div class="container">
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Home"><i class="fas fa-home"></i> Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/RoomSearch"><i class="fas fa-search"></i> Room Search</a>
+                            </li>
+
+                            @if (Context.Session.GetString("UserType") == "Student")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Student/MyRooms"><i class="fas fa-door-open"></i> My Rooms</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Student/RoomBooking"><i class="fas fa-door-open"></i> Room Booking</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Student/Report"><i class="fas fa-door-open"></i> Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Student/Stats"><i class="fas fa-door-open"></i> Stats</a>
+                                </li>
+                            }
+                            @if (Context.Session.GetString("UserType") == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Admin/Users"><i class="fas fa-chart-bar"></i> Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Admin/CreateUsers"><i class="fas fa-chart-bar"></i> Create Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Admin/Stats"><i class="fas fa-chart-bar"></i> Stats</a>
+                                </li>
+                            }
+                            @if (Context.Session.GetString("UserType") == "Professor")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Professor/MyRooms"><i class="fas fa-door-open"></i> My Rooms</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Professor/RoomBooking"><i class="fas fa-door-open"></i> Room Booking</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Professor/Report"><i class="fas fa-door-open"></i> Report</a>
+                                </li>
+                            }
+                            @if (Context.Session.GetString("UserType") == "TA")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/TA/MyRooms"><i class="fas fa-door-open"></i> My Rooms</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/TA/RoomBooking"><i class="fas fa-door-open"></i> Room Booking</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/TA/Report"><i class="fas fa-door-open"></i> Report</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/TA/Stats"><i class="fas fa-door-open"></i> Stats</a>
+                                </li>
+                            }
+                            @if (Context.Session.GetString("UserType") == "RoomSevicesTeam")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/RoomServicesTeam/Reports"><i class="fas fa-door-open"></i> Reports</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/RoomServicesTeam/Quotas"><i class="fas fa-door-open"></i> Quotas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/RoomServicesTeam/DailyCleaning"><i class="fas fa-door-open"></i> Daily Cleaning</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/RoomServicesTeam/CleaningRequests"><i class="fas fa-door-open"></i> Cleaning Requests</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/RoomServicesTeam/RoomsCondition"><i class="fas fa-door-open"></i> Rooms Condition</a>
+                                </li>
+                            }
+                            @if (Context.Session.GetString("UserType") == "CleaningStaff")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/CleaningStaff/CleaningRequests"><i class="fas fa-door-open"></i> Cleaning Requests</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/CleaningStaff/DailyCleaning"><i class="fas fa-door-open"></i> Daily Cleaning</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/CleaningStaff/Supplies"><i class="fas fa-door-open"></i> Supplies</a>
+                                </li>
+                            }
+                            @if (Context.Session.GetString("UserType") == "Registrar")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Registrar/Courses"><i class="fas fa-door-open"></i> Courses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="/Registrar/AddCourse"><i class="fas fa-door-open"></i> Add Course</a>
+                                </li>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Context.Session.GetString("UserType")))
+                            {
+                                <li class="nav-item ms-auto">
+                                     <form method="post" asp-page="/Logout" class="form-inline">
+                                    <button type="submit" class="nav-link btn btn-link text-white">
+                                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                                    </button>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+    </header>
+    }
+    @RenderSection("HideNavBar", required: false)
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+<style>
+.logo-container {
+    padding: 10px 0 0 20px;
+}
+.logo {
+    height: 60px;
+    width: auto;
+    }
+
+.nav-item.ms-auto {
+    margin-left: auto !important;
+}
+
+.navbar {
+    background-color: #2c3e50 !important;
+}
+
+.nav-link {
+    color: white !important;
+    margin: 0 10px;
+}
+
+    .nav-link:hover {
+            opacity: 0.8;
+            color: #f39c12 !important;
+    }
+
+.navbar-brand {
+    font-weight: bold;
+}
+</style>
+</html>
+
+

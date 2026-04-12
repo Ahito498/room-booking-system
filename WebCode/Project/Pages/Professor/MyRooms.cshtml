@@ -1,0 +1,59 @@
+﻿@page
+@model Project.Pages.Professor.My_RoomsModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Rooms";
+}
+<div class="container">
+    <h2>My Lecture Rooms</h2>
+
+    <!-- Course Rooms -->
+    <div class="row">
+        @foreach (var course in Model.Courses)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        @course.CourseCode - @course.CourseName
+                    </div>
+                    <div class="card-body">
+                        <p>Room: @course.RoomNumber</p>
+                        <p>Schedule: @course.TimeSlot</p>
+                        <button class="btn btn-sm btn-warning"
+                                data-bs-toggle="modal"
+                                data-bs-target="#changeModal-@course.Id">
+                            Request Change
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Change Requests Table -->
+    <h3>Pending Changes</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Requested Room</th>
+                <th>Reason</th>
+                <th>Actions</th>    
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model.ChangeRequests)
+            {
+                <tr>
+                    <td>@request.CourseCode</td>
+                    <td>@request.NewRoom</td>
+                    <td>@request.Reason</td>
+                    <td>
+                        <button class="btn btn-success btn-sm">Approve</button>
+                        <button class="btn btn-danger btn-sm">Reject</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

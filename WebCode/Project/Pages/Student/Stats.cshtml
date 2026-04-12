@@ -1,0 +1,70 @@
+﻿@page
+@model Project.Pages.Student.StatsModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Account";
+}
+
+<div class="container mt-4">
+
+
+
+
+    <h2>@ViewData["Title"]</h2>
+    <form>
+        <div class="form-group row">
+            <label asp-for="RemainingMonthlyQuota"
+                   class="col-sm-3 col-form-label">
+                Remaining Monthly Quota
+            </label>
+            <div class="col-sm-4">
+                <input asp-for="RemainingMonthlyQuota"
+                       class="form-control"
+                       readonly />
+            </div>
+        </div>
+
+
+        <fieldset class="border p-3 mb-4">
+            <legend class="w-auto font-weight-bold">Request Additional Quota</legend>
+
+            <div class="form-group row">
+                <label asp-for="AdditionalHours"
+                       class="col-sm-3 col-form-label">
+                    Number of additional hours
+                </label>
+                <div class="col-sm-4">
+                    <input asp-for="AdditionalHours"
+                           class="form-control" />
+                    <span asp-validation-for="AdditionalHours"
+                          class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="Reason"
+                       class="col-sm-3 col-form-label">
+                    Reason
+                </label>
+                <div class="col-sm-4">
+                    <textarea asp-for="Reason"
+                              class="form-control"
+                              rows="3"></textarea>
+                    <span asp-validation-for="Reason"
+                          class="text-danger"></span>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Submit button -->
+        <div class="form-group text-center">
+            <button type="submit"
+                    class="btn btn-success btn-lg">
+                Request
+            </button>
+        </div>
+
+
+
+    </form>
+</div>

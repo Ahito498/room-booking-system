@@ -1,0 +1,63 @@
+﻿@page
+@model Project.Pages.CleaningStaff.Daily_CleaningModel
+@{
+    ViewData["Title"] = "Daily Cleaning";
+}
+
+<h2>Daily Cleaning Tasks</h2>
+
+<!-- Date Filter -->
+<form method="post" asp-page-handler="FilterByDate" class="mb-4 d-flex align-items-center">
+    <label asp-for="SelectedDate" class="me-2">Filter by Date</label>
+    <input asp-for="SelectedDate" type="date" class="form-control w-25 me-2" />
+
+    <button type="submit" class="btn btn-secondary">Filter</button>
+</form>
+
+@if (Model.DailyStatuses.Rows.Count == 0)
+{
+    <p>No cleaning requests pending or in progress.</p>
+}
+else
+{
+    <!-- Status Update Form -->
+    <form method="post" asp-page-handler="UpdateStatus">
+        <div class="d-flex align-items-center mb-3">
+            <label class="me-2">Room</label>
+            <select asp-for="SelectedRoom" class="form-select w-25" required>
+                <option value="">Select a Room</option>
+                @foreach (System.Data.DataRow row in Model.DailyStatuses.Rows)
+                {
+                    <option value="@row["RoomID"]">@row["RoomID"]</option>
+                }
+            </select>
+
+            <label class="ms-3 me-2">New Condition</label>
+            <select asp-for="SelectedCondition" class="form-select w-25" required>
+                <option value="In progress">In Progress</option>
+                <option value="Handled">Done</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary ms-3">Set</button>
+        </div>
+    </form>
+
+    <!-- Requests Table -->
+    <table class="table table-bordered mt-4">
+        <thead class="table-success">
+            <tr>
+                <th>Room ID</th>
+                <th>Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (System.Data.DataRow row in Model.DailyStatuses.Rows)
+        {
+            <tr>
+                <td>@row["RoomID"]</td>
+                <td>@row["Condition"]</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

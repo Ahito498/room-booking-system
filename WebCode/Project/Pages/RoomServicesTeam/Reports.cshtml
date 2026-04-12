@@ -1,0 +1,65 @@
+﻿@page
+@model Project.Pages.RoomServicesTeam.ReportsModel
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<h2>Reports</h2>
+
+@if (Model.ReportsTable.Rows.Count == 0)
+{
+    <p>No pending or in-progress cleaning requests with complaints found.</p>
+}
+else
+{
+    <form method="post" asp-page-handler="UpdateReportStatus">
+        <div class="d-flex align-items-center mb-3">
+            <label asp-for="SelectedReport" class="ms-3 me-2">Select Report</label>
+            <select asp-for="SelectedReport" class="form-select w-25" required>
+                <option value="">Select a Report</option>
+                @foreach (System.Data.DataRow row in Model.ReportsTable.Rows)
+                {
+                    <option value="@row["ID"]">@row["RoomID"] - @row["Complaint"]</option>
+                }
+            </select>
+
+            <label asp-for="SelectedCondition" class="ms-3 me-2">Condition</label>
+            <select asp-for="SelectedCondition" class="form-select w-25" required>
+                <option value="In progress">In Progress</option>
+                <option value="Handled">Done</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary ms-3">Update</button>
+        </div>
+    </form>
+
+
+    <h3 class="mt-4">Reports Table</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Room ID</th>
+                <th>Complaint</th>
+                <th>Requestor Name</th>
+                <th>Request Date</th>
+                <th>Request Time</th>
+                <th>Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (System.Data.DataRow row in Model.ReportsTable.Rows)
+        {
+            <tr>
+                <td>@row["ID"]</td>
+                <td>@row["RoomID"]</td>
+                <td>@row["Complaint"]</td>
+                <td>@row["RequestorName"]</td>
+                <td>@Convert.ToDateTime(row["RequestDate"]).ToShortDateString()</td>
+                <td>@row["RequestTime"]</td>
+                <td>@row["Condition"]</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,33 @@
+﻿@page
+@model Project.Pages.Admin.StatsModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Statistics";
+}
+ 
+ 
+ 
+<h2>System Statistics</h2>
+ 
+<div class="row g-3 mt-2">
+    <div class="col-sm-6">
+        <label class="form-label">Number of Professors</label>
+        <input asp-for="ProfessorsCount" class="form-control" readonly />
+    </div>
+    <div class="col-sm-6">
+        <label class="form-label">Number of TAs</label>
+        <input asp-for="TAsCount" class="form-control" readonly />
+    </div>
+    <div class="col-sm-6">
+        <label class="form-label">Number of Students</label>
+        <input asp-for="StudentsCount" class="form-control" readonly />
+    </div>
+    <div class="col-sm-6">
+        <label class="form-label">Handled Booking Requests</label>
+        <input asp-for="HandledBookingRequests" class="form-control" readonly />
+    </div>
+    <div class="col-sm-6">
+        <label class="form-label">Handled Reports</label>
+        <input asp-for="HandledReports" class="form-control" readonly />
+    </div>
+</div>
