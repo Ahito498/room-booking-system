@@ -14,39 +14,46 @@ A full-stack university room booking and facility management web application bui
 
 The University Room Management System is a multi-role web platform that handles room booking, course scheduling, cleaning operations, and facility reporting across a university campus. Each user type has a dedicated dashboard with role-specific functionality, backed by a fully relational MSSQL database.
 
-The system was built and **tested live on localhost** with real sample data covering multiple buildings, rooms, courses, professors, students, TAs, and cleaning staff.
+The system was **built and tested live** with real sample data covering multiple buildings, rooms, courses, professors, students, TAs, and cleaning staff.
 
 ---
 
-## Live Screenshots
+## Screenshots
 
 ### Reports Management
-Facility reports with filterable conditions (In Progress, Pending, Resolved). Staff can view and update complaint statuses in real time.
+Facility reports with filterable conditions. Staff can update complaint statuses in real time.
 
-> Reports table showing Request ID, Room ID, Complaint description, Requestor Name, Date, Time, and Condition — with dropdown update functionality.
+![Reports Table](screenshots/reports-table.png)
 
 ### Quota Request Management
-Room Services Team can approve or reject quota requests submitted by Students and TAs for extra room hours.
+Room Services Team approves or rejects quota requests from Students and TAs.
 
-> Quota Requests table with Approve/Reject dropdown actions per request, showing User Type, Extra Hours requested, and Reason.
+![Quota Requests](screenshots/quota-requests.png)
 
 ### Cleaning Request Management
-Cleaning staff submit and track room cleaning requests. Requests show condition status: Pending, In Progress, Approved, Declined, Handled.
+Cleaning staff submit and track room cleaning requests with real-time status updates.
 
-> Cleaning Requests table showing Request ID, Room ID, Condition, Date, Time, and Requestor — with room selection dropdown to submit new requests.
+![Cleaning Requests](screenshots/cleaning-requests.png)
 
 ### Room Condition Management
-Room Services Team can toggle room availability status (Available/Closed) across all campus buildings and floors.
+Toggle room availability (Available/Closed) across all campus buildings.
 
-> Full room condition list covering AB, HB, and NB buildings with real-time toggle functionality.
+![Room Condition](screenshots/room-condition.png)
+
+### Cleaning Staff Dashboard
+Dedicated cleaning staff view for managing assigned cleaning requests.
+
+![Cleaning Staff](screenshots/cleaning-staff-requests.png)
 
 ### Course Management (Registrar)
-Registrar can add new courses with full scheduling details (lecture room, day, hour, duration, tutorial details) and manage existing courses with Edit/Delete actions.
+Full course creation with lecture/tutorial scheduling, room assignment, and staff assignment.
 
-> Course form with fields: Course Code, Course Name, Professor, TAs IDs, JTAs IDs, Students IDs, Lecture Room/Day/Hour/Duration, Tutorial Room/Day/Hour/Duration.
+![Course Management](screenshots/course-management.png)
 
-### Course View (Professor / Student)
-Professors and students see their enrolled courses in card format showing: Course Name, Professor, TA, JTA, Number of Students.
+### Course View (Professor/Student)
+Card-based view showing enrolled courses with Professor, TA, JTA, and student count.
+
+![Course View](screenshots/course-view.png)
 
 ---
 
@@ -73,7 +80,7 @@ Six distinct user roles, each with a dedicated navigation menu and access-contro
 
 **Reports System**
 - Submit maintenance/complaint reports for specific rooms
-- Filter reports by condition (Pending, In Progress, Resolved)
+- Filter by condition: Pending, In Progress, Resolved
 - Update report conditions with dropdown actions
 
 **Quota Request System**
@@ -91,7 +98,7 @@ Six distinct user roles, each with a dedicated navigation menu and access-contro
 - Full CRUD for courses: code, name, professor assignment
 - Assign TAs, JTAs, and students via comma-separated IDs
 - Schedule lecture and tutorial rooms with day/hour/duration
-- View all existing courses with Edit/Delete actions
+- Edit and delete existing courses
 
 ---
 
@@ -105,27 +112,27 @@ Six distinct user roles, each with a dedicated navigation menu and access-contro
 | Database | Microsoft SQL Server (MSSQL) |
 | Frontend | HTML, CSS, Bootstrap, JavaScript |
 | Auth | Session-based login with role routing |
-| Architecture | MVC-style Razor Pages (MVVM) |
+| Architecture | MVC-style Razor Pages |
 
 ---
 
 ## Database Schema
 
-The system uses a fully relational MSSQL database with 10+ tables:
+10+ relational tables covering every system entity:
 
 ```
 User (UserID, Name, Email, Password, UserType)
 ├── Admin
 ├── Professor  
-├── Student (Quota field)
-├── TA (Quota field)
+├── Student (Quota)
+├── TA (Quota)
 ├── Registrar
 ├── CleaningStaffMember
 └── RoomServicesMember
 
 Room (ID, Building, Floor, Zone, Number, Capacity, AvailabilityStatus, DailyCleaningStatus)
 
-Course (CourseCode, CourseName, ProfessorID, LectureRoom, LectureDay, LectureHour, ...)
+Course (CourseCode, CourseName, ProfessorID, LectureRoom, LectureDay, ...)
 ├── CourseTA
 ├── CourseJTA  
 └── CourseStudent
@@ -135,7 +142,7 @@ Report (RequestID, RoomID, Complaint, RequestorID, Date, Time, Condition)
 QuotaRequest (RequestID, UserID, UserType, ExtraHours, Reason, Status)
 ```
 
-Full schema SQL, ER diagram, relations diagram, and sample data are included in the `/DataBase` directory.
+Full schema SQL, ER diagram, relations diagram, and sample data are included in `/DataBase`.
 
 ---
 
@@ -146,38 +153,30 @@ room-booking-system/
 ├── WebCode/
 │   └── Project/
 │       ├── Pages/
-│       │   ├── Admin/          # User management, stats
-│       │   ├── Professor/      # My rooms, room booking, reports
-│       │   ├── Student/        # Room search, booking, stats
-│       │   ├── TA/             # Rooms, quota requests, tutorials
-│       │   ├── Registrar/      # Course management
-│       │   ├── CleaningStaff/  # Cleaning requests, daily cleaning, supplies
-│       │   ├── RoomServicesTeam/ # Condition management, quotas, reports
+│       │   ├── Admin/
+│       │   ├── Professor/
+│       │   ├── Student/
+│       │   ├── TA/
+│       │   ├── Registrar/
+│       │   ├── CleaningStaff/
+│       │   ├── RoomServicesTeam/
 │       │   ├── Login.cshtml
 │       │   ├── Home.cshtml
 │       │   └── RoomSearch.cshtml
 │       ├── Models/
-│       │   └── DB.cs           # EF Core database context & all models
+│       │   └── DB.cs           # EF Core context & all models
 │       ├── Program.cs
-│       ├── appsettings.json    # Connection string configuration
-│       └── wwwroot/            # Static assets (CSS, JS, images)
+│       └── appsettings.json
 ├── DataBase/
-│   ├── Project Schema.sql      # Full database creation script
-│   ├── Sample Data.sql         # Populated test data
-│   ├── SQLQuery_1.sql
-│   └── Pages Queries/          # SQL queries organized per page/role
-│       ├── Admin/
-│       ├── Professor/
-│       ├── Student/
-│       ├── TA/
-│       ├── Registrar/
-│       ├── Cleaning Staff/
-│       └── Room Servicing Team/
-└── Diagrams/
-    ├── Entities/               # ER diagram (PNG, PDF, drawio)
-    ├── Relations/              # Relations diagram (PNG, PDF, drawio)
-    ├── Schema/                 # Database schema diagram (PNG, PDF, drawio)
-    └── Website UI/             # Full UI wireframes for all roles (PNG, drawio)
+│   ├── Project Schema.sql
+│   ├── Sample Data.sql
+│   └── Pages Queries/          # SQL per page/role
+├── Diagrams/
+│   ├── Entities/               # ER diagram
+│   ├── Relations/              # Relations diagram
+│   ├── Schema/                 # Database schema
+│   └── Website UI/             # UI wireframes for all roles
+└── screenshots/                # Live app screenshots
 ```
 
 ---
@@ -185,7 +184,6 @@ room-booking-system/
 ## Getting Started
 
 ### Prerequisites
-
 - .NET 8 SDK
 - Microsoft SQL Server (or SQL Server Express)
 - Visual Studio 2022 or VS Code with C# Dev Kit
@@ -199,16 +197,14 @@ cd room-booking-system/WebCode
 
 **1. Create the database**
 
-Open SQL Server Management Studio and run:
+Run in SQL Server Management Studio:
 ```sql
--- Run in order:
-1. DataBase/Project Schema.sql   -- Creates database and all tables
-2. DataBase/Sample Data.sql      -- Populates with test data
+-- In order:
+-- 1. DataBase/Project Schema.sql   (creates tables)
+-- 2. DataBase/Sample Data.sql      (populates test data)
 ```
 
-**2. Configure connection string**
-
-Edit `WebCode/Project/appsettings.json`:
+**2. Configure connection string** in `WebCode/Project/appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
@@ -217,45 +213,19 @@ Edit `WebCode/Project/appsettings.json`:
 }
 ```
 
-**3. Run the application**
-
+**3. Run**
 ```bash
-cd WebCode
 dotnet restore
 dotnet run
 ```
 
-Open `https://localhost:5001` in your browser.
-
-### Sample Login Credentials
-
-After running `Sample Data.sql`, you can log in with any user in the database. User types are: `Admin`, `Professor`, `Student`, `TA`, `Registrar`, `CleaningStaffMember`, `RoomServicesMember`.
-
----
-
-## Diagrams
-
-All system diagrams are in the `/Diagrams` directory:
-
-- **ER Diagram** — Entity-relationship diagram showing all entities and attributes
-- **Relations Diagram** — Relational schema showing foreign key relationships  
-- **Database Schema** — Visual table structure with all columns and constraints
-- **Website UI Wireframes** — Page-by-page UI designs for every user role
-
----
-
-## Key Design Decisions
-
-- **Session-based auth** with role-specific routing — each `UserType` maps to a dedicated page namespace
-- **Raw SQL queries** for complex multi-join operations (stored in `/DataBase/Pages Queries/`) alongside EF Core for standard CRUD
-- **Razor Pages** model — each page has a `.cshtml` view and a `.cshtml.cs` code-behind for clean separation
-- **Role-enforced navigation** — each user type sees only their relevant menu items based on session
+Open `https://localhost:5001` — log in with any user from `Sample Data.sql`.
 
 ---
 
 ## Authors
 
-Built by a team of Communication and Information Engineering students at **Zewail City of Science and Technology**, Giza, Egypt.
+Built by Communication and Information Engineering students at **Zewail City of Science and Technology**, Giza, Egypt.
 
 Lead developer: **Hassan Ahmed Rashwan** — [github.com/Ahito498](https://github.com/Ahito498)
 
@@ -263,4 +233,4 @@ Lead developer: **Hassan Ahmed Rashwan** — [github.com/Ahito498](https://githu
 
 ## License
 
-MIT License — feel free to use, fork, and build on this project.
+MIT License
